@@ -1,8 +1,8 @@
 version: '2'
 services:
   mysql:
-    build: ./mysql
-    image: adamryman/ambition-mysql
+    image: mysql
+    container_name: ambition-mysql
     expose:
       - "3306"
     ports:
@@ -13,7 +13,8 @@ services:
       MYSQL_USER: ambition
       MYSQL_PASSWORD: ambition
     volumes:
-      - ./mysql:/docker-entrypoint-initdb.d 
+      - ./mysql/build_database/docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d 
+      - ./mysql/database:/var/lib/mysql
   ambition:
     build: ./ambition-model
     depends_on:
