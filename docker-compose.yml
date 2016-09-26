@@ -15,7 +15,27 @@ services:
     volumes:
       - ./mysql/build_database/docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d 
       - ./mysql/database:/var/lib/mysql
-  ambition:
+  ambition-model:
     build: ./ambition-model
+    environment:
+      MYSQL_ROOT_PASSWORD: ambition
+      MYSQL_DATABASE: ambition
+      MYSQL_USER: ambition
+      MYSQL_PASSWORD: ambition
+      MYSQL_HOST: localhost
+      MYSQL_PORT: 3306
+      PORT: 55400
     depends_on:
       - mysql
+  ambition-web:
+    build: ./ambition-web
+    expose:
+      - "55441"
+    ports:
+      - "55441:55441"
+    environment:
+      ambition_model_GRPC_location: :55440
+      ambition_web_port: 55441
+    depends_on:
+      - ambition-model
+
