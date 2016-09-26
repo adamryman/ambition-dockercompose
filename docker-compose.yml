@@ -14,7 +14,7 @@ services:
       MYSQL_PASSWORD: ambition
     volumes:
       - ./mysql/build_database/docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d 
-        #      - ./mysql/database:/var/lib/mysql
+      - ./mysql/database:/var/lib/mysql
   ambition-model:
     build: ./ambition-model
     image: adamryman/ambition-model
