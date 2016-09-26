@@ -1,8 +1,8 @@
 version: '2'
 services:
-  mysql:
-    image: mysql
-    container_name: ambition-mysql
+  ambition-mysql:
+    image: mysql:latest
+    container_name: ambition-mysql-container
     expose:
       - "3306"
     ports:
@@ -14,28 +14,42 @@ services:
       MYSQL_PASSWORD: ambition
     volumes:
       - ./mysql/build_database/docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d 
-      - ./mysql/database:/var/lib/mysql
+        #      - ./mysql/database:/var/lib/mysql
   ambition-model:
     build: ./ambition-model
+    image: adamryman/ambition-model
+    container_name: ambition-model-container
     environment:
       MYSQL_ROOT_PASSWORD: ambition
       MYSQL_DATABASE: ambition
       MYSQL_USER: ambition
       MYSQL_PASSWORD: ambition
-      MYSQL_HOST: localhost
+      MYSQL_HOST: ambition-mysql
       MYSQL_PORT: 3306
-      PORT: 55400
-    depends_on:
-      - mysql
-  ambition-web:
-    build: ./ambition-web
+      PORT: 55440
+      HTTPPORT: 55439
     expose:
-      - "55441"
+      - "55440"
+      - "55439"
     ports:
-      - "55441:55441"
-    environment:
-      ambition_model_GRPC_location: :55440
-      ambition_web_port: 55441
+      - "55440:55440"
+      - "55439:55439"
     depends_on:
-      - ambition-model
+      - ambition-mysql
+  #ambition-web:
+    #build: ./ambition-web
+    #image: adamryman/ambition-web
+    #container_name: ambition-web-container
+    #expose:
+      #- "55441"
+    #ports:
+      #- "55441:55441"
+    #environment:
+      #ambition_model_GRPC_location: :55440 
+      #ambition_model_HTTP_location: :55439 
+      #ambition_web_port: 55441
+    #depends_on:
+      #- ambition-model
+    #links:
+      #- ambition-model
 
