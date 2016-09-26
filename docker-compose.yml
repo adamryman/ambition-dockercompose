@@ -36,20 +36,17 @@ services:
       - "55439:55439"
     depends_on:
       - ambition-mysql
-  #ambition-web:
-    #build: ./ambition-web
-    #image: adamryman/ambition-web
-    #container_name: ambition-web-container
-    #expose:
-      #- "55441"
-    #ports:
-      #- "55441:55441"
-    #environment:
-      #ambition_model_GRPC_location: :55440 
-      #ambition_model_HTTP_location: :55439 
-      #ambition_web_port: 55441
-    #depends_on:
-      #- ambition-model
-    #links:
-      #- ambition-model
-
+  ambition-web:
+    build: ./ambition-web
+    image: adamryman/ambition-web
+    container_name: ambition-web-container
+    expose:
+      - "55441"
+    ports:
+      - "55441:55441"
+    environment:
+      ambition_model_GRPC_location: ambition-model:55440 
+      ambition_model_HTTP_location: ambition-model:55439 
+      ambition_web_port: 55441
+    depends_on:
+      - ambition-model
