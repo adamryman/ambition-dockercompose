@@ -17,6 +17,7 @@ services:
       - ./mysql/database:/var/lib/mysql
   ambition-model:
     build: ./ambition-model
+    restart: always
     image: adamryman/ambition-model
     container_name: ambition-model-container
     environment:
@@ -36,17 +37,16 @@ services:
       - "55439:55439"
     depends_on:
       - ambition-mysql
-  ambition-web:
-    build: ./ambition-web
-    image: adamryman/ambition-web
-    container_name: ambition-web-container
+  rello:
+    build: ./rello
+    restart: always
+    image: adamryman/rello
+    container_name: ambition-rello
     expose:
-      - "55441"
+      - "5040"
     ports:
-      - "55441:55441"
+      - "5040:5040"
     environment:
-      ambition_model_GRPC_location: ambition-model:55440 
-      ambition_model_HTTP_location: ambition-model:55439 
-      ambition_web_port: 55441
+      ambition_grpc: ambition-model:55440
     depends_on:
       - ambition-model
