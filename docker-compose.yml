@@ -13,13 +13,14 @@ services:
       MYSQL_USER: ambition
       MYSQL_PASSWORD: ambition
     volumes:
-      - ./mysql/build_database/docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d 
+      - ./mysql/build_database/docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d
       - ./mysql/database:/var/lib/mysql
   ambition-model:
-    build: ./ambition-model
-    restart: always
-    image: adamryman/ambition-model
+    image: adamryman/fsrestarter
     container_name: ambition-model-container
+    volumes:
+    - $GOPATH/src/github.com/adamryman/ambition-model/target:/target
+    command: /target run
     environment:
       MYSQL_ROOT_PASSWORD: ambition
       MYSQL_DATABASE: ambition
@@ -29,6 +30,7 @@ services:
       MYSQL_PORT: 3306
       PORT: 55440
       HTTPPORT: 55439
+      RELOADER_DEBUG: 1
     expose:
       - "55440"
       - "55439"
@@ -38,15 +40,17 @@ services:
     depends_on:
       - ambition-mysql
   rello:
-    build: ./rello
-    restart: always
-    image: adamryman/rello
+    image: adamryman/fsrestarter
     container_name: ambition-rello
+    command: /target run
+    volumes:
+    - $GOPATH/src/github.com/adamryman/rello/target:/target
     expose:
       - "5040"
     ports:
       - "5040:5040"
     environment:
+      RELOADER_DEBUG: 1
       ambition_grpc: ambition-model:55440
     depends_on:
       - ambition-model
