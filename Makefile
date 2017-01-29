@@ -1,4 +1,3 @@
-.PHONY:
 include .env
 BASEURL=github.com/adamryman/ambition
 
@@ -27,3 +26,5 @@ ambition-rello:
 		mkdir -p target && \
 		CGO_ENABLED=$(CGO_ENABLED) go build -v -o target/run \
 		./rello-service/rello-server
+
+.PHONY: build all get ambition-model ambition-users ambition-rello
