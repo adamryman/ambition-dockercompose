@@ -1,0 +1,25 @@
+version: "2"
+services:
+  model:
+    expose:
+      - ${MODEL_PORT}
+    environment:
+      GRPC_ADDR: :${MODEL_PORT}
+  users:
+    expose:
+      - ${USERS_PORT}
+    environment:
+      GRPC_ADDR: :${RELLO_PORT}
+  rello:
+    expose:
+      - ${RELLO_PORT}
+    environment:
+      HTTP_ADDR: :${RELLO_PORT}
+      MODEL_HOST: model
+      MODEL_PORT: ${MODEL_PORT}
+      USERS_HOST: users
+      USERS_PORT: ${USERS_PORT}
+  #mysql:
+    #image: adamryman/ambition-mysql
+    #volumes:
+      #- mysqlvol:/var/lib/mysql

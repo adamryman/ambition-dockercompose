@@ -1,40 +1,23 @@
 version: "2"
 services:
   model:
+    extends:
+      file: docker-compose.common.yml
+      service: model
     image: adamryman/fsrestarter
-    expose:
-      - ${MODEL_PORT}
     ports:
-      - ${MODEL_PORT_MAP}
+      - ${MODEL_PORT_EXTERNAL}:${MODEL_PORT}
     volumes:
       - "$GOPATH/src/github.com/adamryman/ambition-model/target:/target"
-    environment:
-      GRPC_ADDR: :${MODEL_PORT}
   users:
     image: adamryman/fsrestarter
-    expose:
-      - ${USERS_PORT}
     ports:
-      - ${USERS_PORT_MAP}
+      - ${USERS_PORT_EXTERNAL}:${USERS_PORT}
     volumes:
       - "$GOPATH/src/github.com/adamryman/ambition-users/target:/target"
-    environment:
-      GRPC_ADDR: :${RELLO_PORT}
   rello:
     image: adamryman/fsrestarter
-    expose:
-      - ${RELLO_PORT}
     ports:
-      - ${RELLO_PORT_MAP}
+      - ${RELLO_PORT_EXTERNAL}:${RELLO_PORT}
     volumes:
       - "$GOPATH/src/github.com/adamryman/ambition-rello/target:/target"
-    environment:
-      GRPC_ADDR: :${RELLO_PORT}
-      MODEL_HOST: model
-      MODEL_PORT: ${MODEL_PORT}
-      USERS_HOST: users
-      USERS_PORT: ${USERS_PORT}
-  mysql:
-    image: adamryman/ambition-mysql
-    #volumes:
-      #- mysqlvol:/var/lib/mysql

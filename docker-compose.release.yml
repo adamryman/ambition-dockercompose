@@ -1,0 +1,19 @@
+version: "2"
+services:
+  model:
+    extends:
+      file: docker-compose.common.yml
+      service: model
+    image: adamryman/ambition-model
+  users:
+    extends:
+      file: docker-compose.common.yml
+      service: users
+    image: adamryman/ambition-users
+  rello:
+    extends:
+      file: docker-compose.common.yml
+      service: rello
+    image: adamryman/ambition-rello
+    ports:
+      - 80:${RELLO_PORT}
