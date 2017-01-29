@@ -1,30 +1,29 @@
-.PHONY: all ambition-model rello vendor build mysql
-MAKEFILE_PATH := $(dir $(abspath $(lastword $(MAKEFILE_LIST))))
-HERE := $(abspath $(MAKEFILE_PATH))
-THERE := $(HERE)/ambition-model
-AMBITION_MODEL := github.com/adamryman/ambition-model
-AMBITION_MODEL_PATH := $$GOPATH/src/$(AMBITION_MODEL)
+.PHONY:
+include .env
+BASEURL=github.com/adamryman/ambition
 
-RELLO := github.com/adamryman/rello
-RELLO_PATH := $$GOPATH/src/$(RELLO)
+build: ambition-model ambition-users ambition-rello
 
-build: ambition-model rello
+all: get build
+
+get:
+	go get -u -v -d $(BASEURL)-model/... $(BASEURL)-users/... $(BASEURL)-rello/...
 
 ambition-model:
-	go get $(AMBITION_MODEL)
-	mkdir -p $(AMBITION_MODEL_PATH)/target
-	GOOS="linux" GOARCH="amd64" go build -o $(AMBITION_MODEL_PATH)/target/run $(AMBITION_MODEL)/ambition-service/ambition-server
+	echo $(CGO_ENABLED)
+	cd $(GOPATH)/src/$(BASEURL)-model && \
+		mkdir -p target && \
+		CGO_ENABLED=$(CGO_ENABLED) go build -v -o target/run \
+		./ambition-service/ambition-server
 
+ambition-users:
+	cd $(GOPATH)/src/$(BASEURL)-users && \
+		mkdir -p target && \
+		CGO_ENABLED=$(CGO_ENABLED) go build -v -o target/run \
+		./users-service/users-server
 
-rello:
-	go get $(RELLO)
-	mkdir -p $(RELLO_PATH)/target
-	GOOS="linux" GOARCH="amd64" go build -o $(RELLO_PATH)/target/run $(RELLO)/rello-service/rello-server
-
-vendor:
-	cd -P ambition-model && govendor add +external
-	cd -P rello && git checkout truss && govendor add +external
-
-mysql:
-	docker-compose up -d ambition-mysql
-	docker-compose logs -f ambition-mysql
+ambition-rello:
+	cd $(GOPATH)/src/$(BASEURL)-rello && \
+		mkdir -p target && \
+		CGO_ENABLED=$(CGO_ENABLED) go build -v -o target/run \
+		./rello-service/rello-server
