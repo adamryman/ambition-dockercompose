@@ -3,10 +3,16 @@ BASEURL=github.com/adamryman/ambition
 
 build: ambition-model ambition-users ambition-rello
 
-all: get build
+all: get build clients
 
 get:
 	go get -u -v -d $(BASEURL)-model/... $(BASEURL)-users/... $(BASEURL)-rello/...
+
+clients: 
+	go install $(BASEURL)-model/ambition-service/ambition-cli-client
+	go install $(BASEURL)-users/users-service/users-cli-client
+	go install $(BASEURL)-rello/rello-service/rello-cli-client
+
 
 ambition-model:
 	echo $(CGO_ENABLED)
@@ -27,4 +33,4 @@ ambition-rello:
 		CGO_ENABLED=$(CGO_ENABLED) go build -v -o target/run \
 		./rello-service/rello-server
 
-.PHONY: build all get ambition-model ambition-users ambition-rello
+.PHONY: build all get ambition-model ambition-users ambition-rello clients
