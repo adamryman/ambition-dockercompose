@@ -5,11 +5,21 @@ services:
       - ${MODEL_PORT}
     environment:
       GRPC_ADDR: :${MODEL_PORT}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      MYSQL_HOST: mysql
+      MYSQL_PORT: 3306
   users:
     expose:
       - ${USERS_PORT}
     environment:
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
       GRPC_ADDR: :${RELLO_PORT}
+      MYSQL_HOST: mysql
+      MYSQL_PORT: 3306
   rello:
     expose:
       - ${RELLO_PORT}
@@ -19,7 +29,7 @@ services:
       MODEL_PORT: ${MODEL_PORT}
       USERS_HOST: users
       USERS_PORT: ${USERS_PORT}
-  #mysql:
-    #image: adamryman/ambition-mysql
-    #volumes:
-      #- mysqlvol:/var/lib/mysql
+  mysql:
+    image: adamryman/ambition-mysql
+    expose:
+      - 3306

@@ -17,3 +17,12 @@ services:
     image: adamryman/ambition-rello
     ports:
       - 80:${RELLO_PORT}
+  mysql:
+    extends:
+      file: docker-compose.common.yml
+      service: mysql
+    volumes:
+      - mysqlvolprod:/var/lib/mysql
+
+volumes:
+  mysqlvolprod:
