@@ -14,10 +14,10 @@ services:
     expose:
       - ${USERS_PORT}
     environment:
+      GRPC_ADDR: :${USERS_PORT}
       MYSQL_DATABASE: ${MYSQL_DATABASE}
       MYSQL_USER: ${MYSQL_USER}
       MYSQL_PASSWORD: ${MYSQL_PASSWORD}
-      GRPC_ADDR: :${RELLO_PORT}
       MYSQL_HOST: mysql
       MYSQL_PORT: 3306
   rello:
