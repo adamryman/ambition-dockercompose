@@ -10,6 +10,7 @@ services:
       MYSQL_PASSWORD: ${MYSQL_PASSWORD}
       MYSQL_HOST: mysql
       MYSQL_PORT: 3306
+      SQLITE3: ${SQLITE3}
   users:
     expose:
       - ${USERS_PORT}
@@ -20,6 +21,8 @@ services:
       MYSQL_PASSWORD: ${MYSQL_PASSWORD}
       MYSQL_HOST: mysql
       MYSQL_PORT: 3306
+      SQLITE3: "target/test.db"
+    env_file: .secret
   rello:
     expose:
       - ${RELLO_PORT}
