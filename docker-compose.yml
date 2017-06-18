@@ -27,14 +27,14 @@ services:
       - ${RELLO_PORT_EXTERNAL}:${RELLO_PORT}
     volumes:
       - "$GOPATH/src/github.com/adamryman/ambition-rello/target:/target"
-  #mysql:
-    #extends:
-      #file: docker-compose.common.yml
-      #service: mysql
-    #ports:
-      #- ${MYSQL_PORT_EXTERNAL}:3306
-    #volumes:
-      #- mysqlvol:/var/lib/mysql
+  mysql:
+    extends:
+      file: docker-compose.common.yml
+      service: mysql
+    ports:
+      - ${MYSQL_PORT_EXTERNAL}:3306
+    volumes:
+      - mysqlvol:/var/lib/mysql
 
 volumes:
   mysqlvol:
