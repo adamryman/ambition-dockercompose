@@ -2,9 +2,9 @@ CREATE DATABASE IF NOT EXISTS users;
 CREATE DATABASE IF NOT EXISTS model;
 CREATE DATABASE IF NOT EXISTS rello;
 
-GRANT ALL PRIVILEGES ON users.* TO 'ambition'@'%';
-GRANT ALL PRIVILEGES ON model.* TO 'ambition'@'%';
-GRANT ALL PRIVILEGES ON rello.* TO 'ambition'@'%';
+-- GRANT ALL PRIVILEGES ON users.* TO 'ambition'@'%';
+-- GRANT ALL PRIVILEGES ON model.* TO 'ambition'@'%';
+-- GRANT ALL PRIVILEGES ON rello.* TO 'ambition'@'%';
 flush privileges;
 
 CREATE TABLE IF NOT EXISTS model.actions(id SERIAL PRIMARY KEY, action_name varchar(255), user_id integer);
@@ -35,14 +35,14 @@ INSERT INTO `model`.`occurrences` (`id`, `action_id`, `datetime`) VALUES (16, 2,
 INSERT INTO `model`.`occurrences` (`id`, `action_id`, `datetime`) VALUES (17, 2, '2017-06-27 03:52:44');
 INSERT INTO `model`.`occurrences` (`id`, `action_id`, `datetime`) VALUES (18, 2, '2017-06-28 03:54:14');
 INSERT INTO `model`.`occurrences` (`id`, `action_id`, `datetime`) VALUES (19, 2, '2017-06-29 03:54:39');
-INSERT INTO `model`.`occurrences` (`id`, `action_id`, `datetime`) VALUES (20, 2, '2017-06-30 03:54:56');
-INSERT INTO `model`.`occurrences` (`id`, `action_id`, `datetime`) VALUES (21, 2, '2017-07-01 03:55:19');
-INSERT INTO `model`.`occurrences` (`id`, `action_id`, `datetime`) VALUES (22, 2, '2017-07-02 03:55:41');
+INSERT INTO `model`.`occurrences` (`id`, `action_id`, `datetime`) VALUES (20, 2, '2017-07-01 03:55:19');
+INSERT INTO `model`.`occurrences` (`id`, `action_id`, `datetime`) VALUES (21, 2, '2017-07-02 03:55:41');
 
 -- Meditate
-INSERT INTO `model`.`occurrences` (`id`, `action_id`, `datetime`) VALUES (23, 3, '2017-06-26 10:51:48');
-INSERT INTO `model`.`occurrences` (`id`, `action_id`, `datetime`) VALUES (24, 3, '2017-06-27 10:52:44');
-INSERT INTO `model`.`occurrences` (`id`, `action_id`, `datetime`) VALUES (25, 3, '2017-06-28 10:54:14');
+INSERT INTO `model`.`occurrences` (`id`, `action_id`, `datetime`) VALUES (22, 3, '2017-06-26 10:51:48');
+INSERT INTO `model`.`occurrences` (`id`, `action_id`, `datetime`) VALUES (23, 3, '2017-06-27 10:52:44');
+INSERT INTO `model`.`occurrences` (`id`, `action_id`, `datetime`) VALUES (24, 3, '2017-06-28 10:54:14');
+INSERT INTO `model`.`occurrences` (`id`, `action_id`, `datetime`) VALUES (25, 3, '2017-06-28 21:54:14');
 INSERT INTO `model`.`occurrences` (`id`, `action_id`, `datetime`) VALUES (26, 3, '2017-06-29 10:54:39');
 INSERT INTO `model`.`occurrences` (`id`, `action_id`, `datetime`) VALUES (27, 3, '2017-06-30 10:54:56');
 INSERT INTO `model`.`occurrences` (`id`, `action_id`, `datetime`) VALUES (28, 3, '2017-07-01 11:55:19');
